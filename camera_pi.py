@@ -1,5 +1,6 @@
 import io
 import time
+import datetime as dt
 import picamera
 from base_camera import BaseCamera
 
@@ -9,7 +10,9 @@ class Camera(BaseCamera):
     def frames():
         with picamera.PiCamera() as camera:
             #camera.resolution = (320, 240)
-            camera.resolution = (720, 480)
+            camera.resolution = (480, 560)
+            camera.annotate_text_size = 20 # (values 6 to 160, default is 32)
+            camera.annotate_text = dt.datetime.now().strftime('%A %d %b %Y')
 
             # let camera warm up
             time.sleep(2)

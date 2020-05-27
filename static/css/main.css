@@ -1,0 +1,55 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: arial;
+	background-color: #E4E7EF;
+	margin: 0;
+}
+
+.banner {
+	height: 55px;
+	background-color: #FFFFFF;
+}
+
+.banner h1 {
+	margin: 0;
+	padding: 10px 0 0 10px;
+	font-size: 30px;
+	color: #000000;
+}
+
+.feed {
+	margin-top: 10px;
+	width: 100%;
+}
+
+.feed img {
+	display: block;
+	width: 95%;
+	margin: 0 auto;
+	border-radius: 5px;
+}
+
+.info-tiles {
+	margin: 10px;
+}
+
+.info-tile {
+	display: inline-block;
+	background-color: #FFFFFF;
+	height: 60px;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.info-tile h1 {
+	margin: 5px;
+	font-size: 20px;
+}
+
+.info-tile p {
+	margin: 5px;
+}

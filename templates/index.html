@@ -1,9 +1,26 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Test Environment</title>
-  </head>
-  <body>
-    <h1>Test Environment</h1>
-    <img style="width: 100%;" src="{{ url_for('video_feed') }}">
-  </body>
+	<head>
+		<title>Gate Camera</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	</head>
+	<body onload="startTime()">
+		<div class="banner">
+			<h1>Gate Video Feed</h1>
+		</div>
+		<div class="feed">
+			<img src="{{ url_for('video_feed') }}">
+		</div>
+		<div class="info-tiles">
+			<div class="info-tile">
+				<h1>Mode</h1>
+				<p>Day</p>
+			</div>
+			<div class="info-tile">
+				<h1>Resolution</h1>
+				<p>480 x 560</p>
+			</div>
+		</div>
+	</body>
 </html>
