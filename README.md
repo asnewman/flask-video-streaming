@@ -1,4 +1,4 @@
-flask-video-streaming
-=====================
+# PriPi Camera System
+A privacy-focused camera system using Raspberry Pi hardware.
 
-Supporting code for my article [video streaming with Flask](http://blog.miguelgrinberg.com/post/video-streaming-with-flask) and its follow-up [Flask Video Streaming Revisited](http://blog.miguelgrinberg.com/post/flask-video-streaming-revisited).
+Base code forked from [miguelgrinberg/flask-video-streaming](https://github.com/miguelgrinberg/flask-video-streaming).
