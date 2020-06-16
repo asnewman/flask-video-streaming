@@ -2,15 +2,19 @@ import smtplib
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 import os
+import picamera
+import datetime
 
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
-GMAIL_USERNAME = ''
-GMAIL_PASSWORD = ''
+
+GMAIL_USERNAME = os.getenv("SENDER_EMAIL")
+GMAIL_PASSWORD = os.getenv("SENDER_EMAIL_PASSWORD")
 
 class Emailer:
-    def sendmail(self, recipient, subject, content):
-        img_data = open('./1.jpg', 'rb').read()
+    def sendmail(self, recipient, subject, image_location):
+        img_data = open(image_location, 'rb').read()
+
         image = MIMEImage(img_data, name='test.jpg')
 
         msg = MIMEMultipart()
@@ -31,10 +35,3 @@ class Emailer:
         session.sendmail(GMAIL_USERNAME, recipient, msg.as_string())
         session.quit
 
-sender = Emailer()
-
-sendTo = ""
-emailSubject = "Test email"
-emailContent = "This is a test of my Emailer Class"
-
-sender.sendmail(sendTo, emailSubject, emailContent)
