@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7ca82134edfbfdedfc497e13eac232322f17850be3011727c9897ea46462c003"
+            "sha256": "1f140fda3560db72126729ed4daf68af96052717e26ab4ef88c6ef8b960f44f5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -85,6 +85,12 @@
             ],
             "version": "==1.1.1"
         },
+        "pbkdf2": {
+            "hashes": [
+                "sha256:ac6397369f128212c43064a2b4878038dab78dab41875364554aaf2a684e6979"
+            ],
+            "version": "==1.3"
+        },
         "picamera": {
             "hashes": [
                 "sha256:890815aa01e4d855a6a95dd3ad0953b872a6b954982106407df0c5a31a163e50"
@@ -94,11 +100,11 @@
         },
         "python-dotenv": {
             "hashes": [
-                "sha256:25c0ff1a3e12f4bde8d592cc254ab075cfe734fc5dd989036716fd17ee7e5ec7",
-                "sha256:3b9909bc96b0edc6b01586e1eed05e71174ef4e04c71da5786370cebea53ad74"
+                "sha256:8c10c99a1b25d9a68058a1ad6f90381a62ba68230ca93966882a4dbc3bc9c33d",
+                "sha256:c10863aee750ad720f4f43436565e4c1698798d763b63234fb5021b6c616e423"
             ],
             "index": "pypi",
-            "version": "==0.13.0"
+            "version": "==0.14.0"
         },
         "werkzeug": {
             "hashes": [
@@ -107,6 +113,13 @@
             ],
             "index": "pypi",
             "version": "==0.12.2"
+        },
+        "wifi": {
+            "hashes": [
+                "sha256:a9880b2e91ea8420154c6826c8112a2f541bbae5641d59c5cb031d27138d7f26"
+            ],
+            "index": "pypi",
+            "version": "==0.3.8"
         }
     },
     "develop": {}

@@ -13,6 +13,7 @@ Flask = "==0.12.2"
 Jinja2 = "==2.9.6"
 Werkzeug = "==0.12.2"
 python-dotenv = "*"
+wifi = "*"
 
 [requires]
 python_version = "3.7"
