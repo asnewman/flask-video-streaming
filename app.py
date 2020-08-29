@@ -30,7 +30,7 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/wifi', methods=['GET', 'POST'])
-def update_wifi():
+def get_wifi():
     if request.method == 'GET':
         connections = Cell.all('wlan0')
         ssids = []
@@ -38,29 +38,6 @@ def update_wifi():
             ssids.append(connection.ssid)
             print(connection)
         return jsonify(data=ssids)
-
-    elif request.method == 'POST':
-        body = request.get_json()
-
-        ssid = body["ssid"]
-        password = body["password"]
-
-        connections = Cell.all('wlan0')
-
-        cell = None
-
-        for connection in connections:
-            print(connection.ssid)
-            if connection.ssid == ssid:
-                cell = connection
-                break;
-
-        if cell == None:
-            return make_response(jsonify(message="Could not find ssid"), 400)
-
-        scheme = Scheme.for_cell('wlan0', 'home', cell, password)
-        scheme.activate()
-        return
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
