@@ -3,7 +3,7 @@ from importlib import import_module
 import os
 from wifi import Cell, Scheme
 from flask import Flask, render_template, Response, request, jsonify, make_response
-
+from qrscanner import QRScanner
 from camera_pi import Camera
 
 app = Flask(__name__)
@@ -40,4 +40,9 @@ def get_wifi():
         return jsonify(data=ssids)
 
 if __name__ == '__main__':
+    #if no wifi connection already
+    data = QRScanner.startScanning()
+    print(data)
+    #attempt to connect to access point using data. If not succesfull start scanning for a QR code again.
+    
     app.run(host='0.0.0.0', threaded=True)
