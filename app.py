@@ -41,6 +41,7 @@ def get_wifi():
 
 if __name__ == '__main__':
     #if no wifi connection already
+    
     data = QRScanner.startScanning()
     print(data)
     #attempt to connect to access point using data. If not succesfull start scanning for a QR code again.
