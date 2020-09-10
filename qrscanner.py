@@ -1,24 +1,22 @@
-from imutils.ivdeo import VideoStream
+import cv2
 from pyzbar import pyzbar
 
 class QRScanner:
     @staticmethod
     def startScanning():
 
-        cap = VideoStream(usePiCamera=True).start()
-        #allow camera to warm up
-        time.sleep(2)
+        cap = cv2.VideoCapture(0)
 
         print("Waiting for a QR Code...")
         
         while True:
                 
-            frame = vs.read()
-            codes = pyzbar.decode(frame)
+            _, img = cap.read()
+            codes = pyzbar.decode(img)
             
             for code in codes:
                 data = code.data.decode('ascii')
-                cap.stop()
+                cap.release()
                 return data
                 
                  
