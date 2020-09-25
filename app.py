@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 from importlib import import_module
 import os
-from wifi import Cell, Scheme
+
 from flask import Flask, render_template, Response, request, jsonify, make_response
 from qrscanner import QRScanner
 from camera_pi import Camera
+from wificonnect import WifiConnect
+import json
 
 app = Flask(__name__)
+DEVICE_CODE="46ae5883b5d4195ffdfe2181e290ed31"
 
 
 @app.route('/')
@@ -40,10 +43,21 @@ def get_wifi():
         return jsonify(data=ssids)
 
 if __name__ == '__main__':
-    #if no wifi connection already
     
-    data = QRScanner.startScanning()
-    print(data)
+    #if not CheckNetwork():
+
+    
+    #only configures wifi if no connection establish
+    if(not WifiConnect.CheckNetwork()):
+        print("not connected")
+        data = QRScanner.startScanning()
+        dataDict = json.loads(data)
+        if(DEVICE_CODE == dataDict['deviceCode']):
+            WifiConnect.AddNetwork(dataDict['ssid'],dataDict['password'])
+            os.system("wpa_cli -i wlan0 reconfigure")
+
+    
+
     #attempt to connect to access point using data. If not succesfull start scanning for a QR code again.
     
-    app.run(host='0.0.0.0', threaded=True)
+    app.run(host='192.168.178.55', threaded=True)

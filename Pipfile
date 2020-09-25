@@ -15,7 +15,6 @@ Werkzeug = "==0.12.2"
 python-dotenv = "*"
 wifi = "*"
 pyzbar = "*"
-opencv-python = "*"
 
 [requires]
 python_version = "3.7"
