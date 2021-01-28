@@ -10,8 +10,8 @@ from emailer import Emailer
 import cv2
 
 class Camera(BaseCamera):
-    @staticmethod
-    def frames(self):
+    @classmethod
+    def frames(cls):
         with picamera.PiCamera() as camera:
             camera.resolution = (480, 560)
             camera.annotate_text_size = 20 # (values 6 to 160, default is 32)
@@ -40,10 +40,9 @@ class Camera(BaseCamera):
             for _ in camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
                 qr_code_check_counter += 1
-                if (qr_code_check_counter == 1000) {
-                    self.handle_qr_check(camera)
+                if (qr_code_check_counter == 100):
+                    cls.handle_qr_check(camera)
                     qr_code_check_counter = 0
-                }
 
                 # return current frame
                 stream.seek(0)
@@ -53,24 +52,26 @@ class Camera(BaseCamera):
                 stream.seek(0)
                 stream.truncate()
 
-    def qr_decoder(image_location):
+    @classmethod
+    def qr_decoder(cls, image_location):
         image = cv2.imread(image_location)
         qr_code_detector = cv2.QRCodeDetector()
         # will be none if no QR code is found
         return qr_code_detector.detectAndDecode(image)
-    
-    def handle_qr_check(camera):
+   
+    @classmethod
+    def handle_qr_check(cls, camera):
         image_location = '/home/pi/Desktop/tmp.jpg'
         camera.capture(image_location)
-        decoded_qr_code = self.qr_decoder(image_location)
+        decoded_qr_code, points, _ = cls.qr_decoder(image_location)
         
-        if (decoded_qr_code != "") {
-            new_data = json.load(decoded_qr_code)
-            with open('.env', 'w') as f:
-                env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
-                for var : env_vars:
-                    f.write(f'{var}={new_data[var] if new_data[var] != None else os.getenv(var)}\n')
-                f.close()
+        if (decoded_qr_code != ""):
+            print(decoded_qr_code)
+            # new_data = json.load(decoded_qr_code)
+            # with open('.env', 'w') as f:
+            #     env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
+            #     for var : env_vars:
+            #         f.write(f'{var}={new_data[var] if new_data[var] != None else os.getenv(var)}\n')
+            #     f.close()
 
-            os.execv(__file__, sys.argv)
-        }
+            # os.execv(__file__, sys.argv)
