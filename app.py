@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+import os
 from importlib import import_module
 import os
 from wifi import Cell, Scheme

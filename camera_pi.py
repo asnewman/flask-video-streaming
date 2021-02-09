@@ -14,6 +14,7 @@ class Camera(BaseCamera):
     def frames(cls):
         with picamera.PiCamera() as camera:
             camera.resolution = (480, 560)
+            # camera.resolution = (1920, 1080)
             camera.annotate_text_size = 20 # (values 6 to 160, default is 32)
             camera.annotate_text = dt.datetime.now().strftime('%A %d %b %Y')
 
@@ -21,6 +22,7 @@ class Camera(BaseCamera):
             time.sleep(2)
 
             # Send an email to the user with a screen cap
+            print(f"Configured email: {os.getenv('SENDER_EMAIL')}")
             if (os.getenv('SEND_EMAIL') == 'true'):
                 send_to = os.getenv('RECEPIENT_EMAIL')
 
@@ -65,13 +67,18 @@ class Camera(BaseCamera):
         camera.capture(image_location)
         decoded_qr_code, points, _ = cls.qr_decoder(image_location)
         
-        if (decoded_qr_code != ""):
+        if (decoded_qr_code == ""):
+            print("No qr code found")
+        else:
             print(decoded_qr_code)
-            # new_data = json.load(decoded_qr_code)
-            # with open('.env', 'w') as f:
-            #     env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
-            #     for var : env_vars:
-            #         f.write(f'{var}={new_data[var] if new_data[var] != None else os.getenv(var)}\n')
-            #     f.close()
+            new_data = json.loads(decoded_qr_code)
+            env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
+            if len([key for key in new_data if key in env_vars]) > 0:
+                print("updating env variables")
+                with open('.env', 'w') as f:
+                    for var in new_data.keys():
+                        f.write(f'{var}={new_data[var] if new_data[var] != None else os.getenv(var)}\n')
+                    f.close()
 
-            # os.execv(__file__, sys.argv)
+                camera.close()
+                os.execv(sys.executable, ['python'] + [os.path.abspath(sys.argv[0])])
