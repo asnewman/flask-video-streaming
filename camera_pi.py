@@ -8,6 +8,7 @@ import json
 from base_camera import BaseCamera
 from emailer import Emailer
 import cv2
+import numpy as np
 
 class Camera(BaseCamera):
     @classmethod
@@ -38,19 +39,39 @@ class Camera(BaseCamera):
 
             # Start streaming
             stream = io.BytesIO()
-            qr_code_check_counter = 0
-            for _ in camera.capture_continuous(stream, 'jpeg',
+            qr_code_check_counter = 99
+            for frame in camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
-                qr_code_check_counter += 1
-                if (qr_code_check_counter == 100):
-                    cls.handle_qr_check(camera)
-                    qr_code_check_counter = 0
+                
 
                 # return current frame
                 stream.seek(0)
-                yield stream.read()
+                curr_frame = stream.read()
+                yield curr_frame
+                
+                qr_code_check_counter += 1
+                if (qr_code_check_counter == 100):
+                    qr_code_detector = cv2.QRCodeDetector()
+                    bytes = np.asarray(bytearray(curr_frame), dtype=np.uint8)
+                    cv_image = cv2.imdecode(bytes, cv2.IMREAD_COLOR)
+                    decoded_qr_code, points, _ = qr_code_detector.detectAndDecode(cv_image)
+                    if (decoded_qr_code != ""):
+                        print(decoded_qr_code)
+                        new_data = json.loads(decoded_qr_code)
+                        env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
+                        if len([key for key in new_data if key in env_vars]) > 0:
+                            print("updating env variables")
+                            with open('.env', 'w') as f:
+                                for var in new_data.keys():
+                                    f.write(f'{var}={new_data[var] if new_data[var] != None else os.getenv(var)}\n')
+                                f.close()
+            
+                            camera.close()
+                            os.execv(sys.executable, ['python'] + [os.path.abspath(sys.argv[0])])
 
-                # reset stream for next frame
+                    qr_code_check_counter = 0
+                
+                qr_code_check_counter += 1
                 stream.seek(0)
                 stream.truncate()
 
