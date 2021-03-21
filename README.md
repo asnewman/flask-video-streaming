@@ -7,6 +7,7 @@ Base code forked from [miguelgrinberg/flask-video-streaming](https://github.com/
 ### Prerequisites
 - Python 3.6+
 - virtualenv
+- Install OpenCV on your RaspberryPi - [instructions](https://gist.github.com/asnewman/9da37388183189bf022fd1de45609372)
 ### Running
 1. Clone code
 1. `cd` into the directory and start a new virtualenv
