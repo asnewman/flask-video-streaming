@@ -9,6 +9,6 @@ function ctrl_c() {
 }
 
 source ./venv/bin/activate
-nohup button_activator.py > button_activator.log 2>&1 &
+nohup python button_activator.py > button_activator.log 2>&1 &
 echo $! > button_activator_pid.txt
 python app.py
