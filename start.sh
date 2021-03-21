@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 trap ctrl_c INT
 
