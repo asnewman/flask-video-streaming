@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Video streaming home page."""
-    data
+    data = {}
     data.send_email = os.getenv('SEND_EMAIL')
 
     return render_template('index.html', data=data)
