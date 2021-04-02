@@ -16,7 +16,9 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Video streaming home page."""
-    return render_template('index.html')
+    data.send_email = os.getenv('SEND_EMAIL')
+
+    return render_template('index.html', data=data)
 
 
 def gen(camera):
