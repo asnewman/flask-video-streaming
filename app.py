@@ -18,6 +18,7 @@ def index():
     """Video streaming home page."""
     data = {}
     data["send_email"] = os.getenv('SEND_EMAIL')
+    data["sender_email"] = os.getenv('SENDER_EMAIL')
 
     return render_template('index.html', data=data)
 
