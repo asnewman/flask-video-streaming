@@ -9,6 +9,13 @@ from base_camera import BaseCamera
 from emailer import Emailer
 import cv2
 import numpy as np
+import PRiGPIO as GPIO
+
+RELAY_PIN = 18
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(REPLAY_PIN, GPIO.OUT)
 
 class Camera(BaseCamera):
     @classmethod
@@ -58,6 +65,15 @@ class Camera(BaseCamera):
                     if (decoded_qr_code != ""):
                         print(decoded_qr_code)
                         new_data = json.loads(decoded_qr_code)
+                        if (new_data["ENTRY_CODE"] != None):
+                            correct_code = os.getenv('DEVICE_NUMBER') + os.getenv('DEVICE_PASSWORD')
+                            
+                            if (correct_code == new_data["ENTRY_CODE"]):
+                                GPIO.output(RELAY_PIN, GPIO.HIGH)
+                                time.sleep(1)
+                                GPIO.output(RELAY_PIN, GPIO.LOW)
+
+
                         env_vars = ["SEND_EMAIL", "SENDER_EMAIL", "SENDER_EMAIL_PASSWORD", "RECEPIENT_EMAIL"]
                         if len([key for key in new_data if key in env_vars]) > 0:
                             print("updating env variables")
