@@ -9,20 +9,21 @@ from base_camera import BaseCamera
 from emailer import Emailer
 import cv2
 import numpy as np
-import PRiGPIO as GPIO
+import RPi.GPIO as GPIO
 
-RELAY_PIN = 18
+
+RELAY_PIN = 22
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
-GPIO.setup(REPLAY_PIN, GPIO.OUT)
+GPIO.setup(RELAY_PIN, GPIO.OUT)
 
 class Camera(BaseCamera):
     @classmethod
     def frames(cls):
         with picamera.PiCamera() as camera:
             camera.resolution = (480, 560)
-            # camera.resolution = (1920, 1080)
+            # camera.resolution = (720, 840)
             camera.annotate_text_size = 20 # (values 6 to 160, default is 32)
             camera.annotate_text = dt.datetime.now().strftime('%A %d %b %Y')
 
@@ -65,12 +66,15 @@ class Camera(BaseCamera):
                     if (decoded_qr_code != ""):
                         print(decoded_qr_code)
                         new_data = json.loads(decoded_qr_code)
-                        if (new_data["ENTRY_CODE"] != None):
+                        print(new_data)
+                        if ("DEVICE_PASSWORD" in new_data):
                             correct_code = os.getenv('DEVICE_NUMBER') + os.getenv('DEVICE_PASSWORD')
-                            
-                            if (correct_code == new_data["ENTRY_CODE"]):
+                            given_code = new_data['DEVICE_CODE'] + new_data['DEVICE_PASSWORD']
+                            print(given_code, correct_code)
+                            if (correct_code == given_code):
+                                print('code accepted')
                                 GPIO.output(RELAY_PIN, GPIO.HIGH)
-                                time.sleep(1)
+                                time.sleep(3)
                                 GPIO.output(RELAY_PIN, GPIO.LOW)
 
 
