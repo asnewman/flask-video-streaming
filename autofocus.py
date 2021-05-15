@@ -135,6 +135,9 @@ if __name__ == "__main__":
         if focal_distance > 1000:
             break
 
+        stream.seek(0)
+        stream.truncate()
+
     # Adjust focus to the best
     focusing(max_index)
     time.sleep(1)
