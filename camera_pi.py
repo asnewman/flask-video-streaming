@@ -81,7 +81,7 @@ class Camera(BaseCamera):
                     autofocus_result = run_autofocus(curr_frame, max_index, max_value, last_value, dec_count, focal_distance)
                     print(autofocus_result)
 
-                    if autofocus_result:
+                    if autofocus_result == True:
                         print('Done autofocusing')
                         do_autofocus = False
                     else:
