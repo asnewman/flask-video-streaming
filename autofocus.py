@@ -78,11 +78,11 @@ def run_autofocus(frame, max_index, max_value, last_value, dec_count, focal_dist
         return True
 
     return {
-        max_index: new_max_index,
-        max_value: new_max_value,
-        last_value: new_last_value,
-        dec_count: new_dec_count,
-        focal_distance: new_focal_distance
+        "max_index": new_max_index,
+        "max_value": new_max_value,
+        "last_value": new_last_value,
+        "dec_count": new_dec_count,
+        "focal_distance": new_focal_distance
     }
 
 
