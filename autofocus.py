@@ -54,6 +54,7 @@ def run_autofocus(camera):
         focusing(focal_distance)
         # Take image and calculate image clarity
         val = calculation(camera)
+        print(val)
         # Find the maximum image clarity
         if val > max_value:
             max_index = focal_distance
