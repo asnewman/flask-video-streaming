@@ -79,14 +79,17 @@ class Camera(BaseCamera):
 
                 if do_autofocus:
                     autofocus_result = run_autofocus(curr_frame, max_index, max_value, last_value, dec_count, focal_distance)
+                    print(autofocus_result)
 
                     if not autofocus_result:
+                        print('continuing autofocus')
                         max_index = autofocus_result["max_index"]
                         max_value = autofocus_result["max_value"]
                         last_value = autofocus_result["last_value"]
                         dec_count = autofocus_result["dec_count"]
                         focal_distance = autofocus_result["focal_distance"]
                     else:
+                        print('Done autofocusing')
                         do_autofocus = False
                 
                 qr_code_check_counter += 1
