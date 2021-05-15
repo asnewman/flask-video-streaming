@@ -99,6 +99,8 @@ if __name__ == "__main__":
     dec_count = 0
     focal_distance = 10
 
+    stream = io.BytesIO()
+
     for frame in camera.capture_continuous(stream, 'jpeg',
                                            use_video_port=True):
 
