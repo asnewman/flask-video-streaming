@@ -77,7 +77,7 @@ class Camera(BaseCamera):
                     focal_distance = 10
                     autofocus_counter = 0
 
-                if do_autofocus == true:
+                if do_autofocus:
                     autofocus_result = run_autofocus(curr_frame, max_index, max_value, last_value, dec_count, focal_distance)
 
                     if not autofocus_result:
