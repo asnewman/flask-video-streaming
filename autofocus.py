@@ -68,14 +68,14 @@ def run_autofocus(frame, max_index, max_value, last_value, dec_count, focal_dist
     if new_dec_count > 6:
         focusing(new_max_index)
         print("Camera focused")
-        return true
+        return True
 
     # Increase the focal distance
     new_focal_distance += 15
     if new_focal_distance > 1000:
         focusing(new_max_index)
         print("Camera focused to infinite")
-        return true
+        return True
 
     return {
         max_index: new_max_index,

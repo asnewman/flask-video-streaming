@@ -50,7 +50,7 @@ class Camera(BaseCamera):
             stream = io.BytesIO()
             qr_code_check_counter = 99
 
-            do_autofocus = false
+            do_autofocus = False
             autofocus_counter=999
             max_index = 10
             max_value = 0.0
@@ -69,7 +69,7 @@ class Camera(BaseCamera):
 
                 autofocus_counter += 1
                 if autofocus_counter == 1000:
-                    do_autofocus = true
+                    do_autofocus = True
                     max_index = 10
                     max_value = 0.0
                     last_value = 0.0
@@ -80,14 +80,14 @@ class Camera(BaseCamera):
                 if do_autofocus == true:
                     autofocus_result = run_autofocus(curr_frame, max_index, max_value, last_value, dec_count, focal_distance)
 
-                    if autofocus_result != true:
+                    if not autofocus_result:
                         max_index = autofocus_result["max_index"]
                         max_value = autofocus_result["max_value"]
                         last_value = autofocus_result["last_value"]
                         dec_count = autofocus_result["dec_count"]
                         focal_distance = autofocus_result["focal_distance"]
                     else:
-                        do_autofocus = false
+                        do_autofocus = False
                 
                 qr_code_check_counter += 1
                 if (qr_code_check_counter == 100):
