@@ -1,3 +1,4 @@
+import io
 import cv2  # sudo apt-get install python-opencv
 import numpy as np
 import os
