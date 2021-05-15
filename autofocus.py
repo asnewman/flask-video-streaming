@@ -115,6 +115,7 @@ if __name__ == "__main__":
         # Take image and calculate image clarity
         val = calculation(curr_frame)
         # Find the maximum image clarity
+        print(val)
         if val > max_value:
             max_index = focal_distance
             max_value = val
