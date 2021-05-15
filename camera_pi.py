@@ -49,7 +49,14 @@ class Camera(BaseCamera):
             # Start streaming
             stream = io.BytesIO()
             qr_code_check_counter = 99
+
+            do_autofocus = false
             autofocus_counter=999
+            max_index = 10
+            max_value = 0.0
+            last_value = 0.0
+            dec_count = 0
+            focal_distance = 10
 
             for frame in camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
@@ -61,9 +68,26 @@ class Camera(BaseCamera):
                 yield curr_frame
 
                 autofocus_counter += 1
-                if (autofocus_counter == 1000):
+                if autofocus_counter == 1000:
+                    do_autofocus = true
+                    max_index = 10
+                    max_value = 0.0
+                    last_value = 0.0
+                    dec_count = 0
+                    focal_distance = 10
                     autofocus_counter = 0
-                    run_autofocus(camera)
+
+                if do_autofocus == true:
+                    autofocus_result = run_autofocus(curr_frame, max_index, max_value, last_value, dec_count, focal_distance)
+
+                    if autofocus_result != true:
+                        max_index = autofocus_result["max_index"]
+                        max_value = autofocus_result["max_value"]
+                        last_value = autofocus_result["last_value"]
+                        dec_count = autofocus_result["dec_count"]
+                        focal_distance = autofocus_result["focal_distance"]
+                    else:
+                        do_autofocus = false
                 
                 qr_code_check_counter += 1
                 if (qr_code_check_counter == 100):
