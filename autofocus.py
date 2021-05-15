@@ -41,19 +41,7 @@ def calculation(camera):
     rawCapture.truncate(0)
     return laplacian(image)
 
-
-if __name__ == "__main__":
-    # open camera
-    camera = picamera.PiCamera()
-
-    # camera.awb_gains=4
-    # camera.exposure_mode='off'
-    # camera.awb_mode='fluorescent'
-    # open camera preview
-    camera.start_preview()
-    # set camera resolution to 640x480(Small resolution for faster speeds.)
-    camera.resolution = (640, 480)
-    time.sleep(0.1)
+def run_autofocus(camera):
     print("Start focusing")
 
     max_index = 10
@@ -89,14 +77,5 @@ if __name__ == "__main__":
 
     # Adjust focus to the best
     focusing(max_index)
-    time.sleep(1)
-    # set camera resolution to 2592x1944
-    camera.resolution = (1920, 1080)
-    # save image to file.
-    camera.capture("test.jpg")
-    print("max index = %d,max value = %lf" % (max_index, max_value))
-    # while True:
-    #	time.sleep(1)
 
-    camera.stop_preview()
-    camera.close()
+    print("Camera focused")

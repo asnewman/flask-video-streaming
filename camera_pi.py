@@ -10,6 +10,7 @@ from emailer import Emailer
 import cv2
 import numpy as np
 import RPi.GPIO as GPIO
+from autofocus import run_autofocus
 
 
 RELAY_PIN = 22
@@ -48,6 +49,8 @@ class Camera(BaseCamera):
             # Start streaming
             stream = io.BytesIO()
             qr_code_check_counter = 99
+            autofocus_counter=999
+
             for frame in camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
                 
@@ -56,6 +59,11 @@ class Camera(BaseCamera):
                 stream.seek(0)
                 curr_frame = stream.read()
                 yield curr_frame
+
+                autofocus_counter += 1
+                if (autofocus_counter == 1000):
+                    autofocus_counter = 0
+                    run_autofocus(camera)
                 
                 qr_code_check_counter += 1
                 if (qr_code_check_counter == 100):
